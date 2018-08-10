@@ -6,6 +6,6 @@ import ReactDOM from 'react-dom';
 import './styles/main.sass';
 
 //Components
-import Calculator from './components/App'
+import Calculator from './App'
 
 ReactDOM.render(<Calculator />, document.getElementById('app'));
