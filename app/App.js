@@ -24,7 +24,7 @@ const fontConfig = {
 class App extends Component {
 	constructor() {
 		super()
-		this.state = { queue: [] }
+		this.state = { queue: [] };
 		this.handleClick = this.handleClick.bind(this);
 	}
 
