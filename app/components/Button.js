@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 
-class Button extends Component {
+export default class Button extends Component {
 	render() {
-		const label = this.props.label || this.props.value;
+		const { value, label, color, size, pressed, onClick } = this.props;
+		const text = label || value;
 		return (
 			<div
-				onClick={this.props.onClick}
-				className={`btn ${this.props.color}-btn btn-${this.props.size}`}
-				data-value={this.props.value}
-			>
-				{label}
+				onClick={onClick}
+				className={`btn ${color}-btn btn-${size} ${pressed && `btn-${color}-pressed`}`}
+				data-value={value}>
+				{text}
 			</div>
 		);
 	}
 }
-
-export default Button;

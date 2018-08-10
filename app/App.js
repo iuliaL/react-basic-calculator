@@ -10,18 +10,8 @@ import keydown from 'react-keydown';
 import Display from './components/Display'
 import Button from './components/Button'
 
-const styles = {
-	google: {
-		fontFamily: 'Work Sans'
-	}
-};
-
-const fontConfig = {
-	google: ['Work Sans:200']
-};
-
 @keydown
-class App extends Component {
+export default class Calculator extends Component {
 
 	state = { queue: [] };
 
@@ -35,17 +25,19 @@ class App extends Component {
 	handleValue = value => {
 		switch (value) {
 			case 'clear':
-				this.setState({
-					queue: []
-				})
+				this.setState(() => ({
+					queue: [],
+					pressedKey: null
+				}));
 				break;
 			case '=':
 				this.calculate();
 				break;
 			default:
-				this.setState({
-					queue: [...this.state.queue, value]
-				})
+				this.setState((prevState) => ({
+					...prevState,
+					queue: [...prevState.queue, value]
+				}));
 				break;
 		}
 	}
@@ -59,9 +51,16 @@ class App extends Component {
 		];
 		const keyAccepted = acceptedKeys.indexOf(key) > -1;
 		if (keyAccepted) {
+			let timerId;
 			const keyValue = (key === 'Enter' && '=') || (key === 'Backspace' && 'clear') || key;
-			this.setState({ ...this.state, pressedKey: keyValue });
+			this.setState((prevState) => ({ ...prevState, pressedKey: keyValue }));
 			this.handleValue(keyValue);
+			if (timerId) {
+				clearTimeout(timerId);
+			}
+			timerId = setTimeout(() =>
+				this.setState((prevState) => ({ ...prevState, pressedKey: null }))
+				, 300);
 		}
 	}
 
@@ -75,38 +74,58 @@ class App extends Component {
 		if (input.length) {
 			const result = math.eval(input);
 			const formattedResult = math.format(result, { precision: 10 });
-			this.setState({
-				...this.state,
+			this.setState((prevState) => ({
+				...prevState,
 				queue: [formattedResult]
-			});
+			}));
 		}
 	}
 
 	render() {
 		return (
-			<div className='frame' style={styles.google}>
+			<div className='frame'>
 				<div className='calculator'>
 					<Display input={this.state.queue} />
 					<div className='panel'>
 						<div className='number-container'>
-							<Button size='3x' color="white" onClick={this.handleClick} value='clear' style={{ borderTopLeftRadius: 20 }} />
+							<Button
+								pressed={this.state.pressedKey === 'clear'}
+								size='3x' color="white" onClick={this.handleClick} value='clear'
+								style={{ borderTopLeftRadius: 20 }} />
 							{
 								[...Array(9).keys()]
 									.sort((a, b) => b - a)
 									.map(item =>
-										<Button key={item} size='1x' color="white" onClick={this.handleClick} value={(item + 1).toString()} />
+										<Button
+											pressed={this.state.pressedKey === (item + 1).toString()}
+											key={item}
+											size='1x'
+											color="white"
+											onClick={this.handleClick}
+											value={(item + 1).toString()} />
 									)
 							}
-							<Button size='2x' color="white" onClick={this.handleClick} value='0' />
-							<Button size='1x' color="white" onClick={this.handleClick} value='.' />
+							<Button pressed={this.state.pressedKey === '0'}
+								size='2x' color="white" onClick={this.handleClick} value='0' />
+							<Button pressed={this.state.pressedKey === '.'}
+								size='1x' color="white" onClick={this.handleClick} value='.' />
 						</div>
 
 						<div className='operation-container'>
-							<Button size='1x' color="red" onClick={this.handleClick} value='/' label='&divide;' style={{ borderTopRightRadius: 20 }} />
-							<Button size='1x' color="red" onClick={this.handleClick} value='*' label='&times;' />
-							<Button size='1x' color="red" onClick={this.handleClick} value='-' />
-							<Button size='1x' color="red" onClick={this.handleClick} value='+' />
-							<Button size='1x' color="red" onClick={this.handleClick} value='=' />
+							<Button size='1x' color="red"
+								pressed={this.state.pressedKey === '/'}
+								onClick={this.handleClick}
+								value='/'
+								label='&divide;'
+								style={{ borderTopRightRadius: 20 }} />
+							<Button pressed={this.state.pressedKey === '*'}
+								size='1x' color="red" onClick={this.handleClick} value='*' label='&times;' />
+							<Button pressed={this.state.pressedKey === '-'}
+								size='1x' color="red" onClick={this.handleClick} value='-' />
+							<Button pressed={this.state.pressedKey === '+'}
+								size='1x' color="red" onClick={this.handleClick} value='+' />
+							<Button pressed={this.state.pressedKey === '='}
+								size='1x' color="red" onClick={this.handleClick} value='=' />
 						</div>
 					</div>
 				</div>
@@ -114,5 +133,3 @@ class App extends Component {
 		);
 	}
 }
-
-export default ReactFontIt(App, fontConfig);
