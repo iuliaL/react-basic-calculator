@@ -22,10 +22,8 @@ const fontConfig = {
 };
 
 class App extends Component {
-	constructor() {
-		super()
-		this.state = { queue: [] };
-	}
+
+	state = { queue: [] };
 
 	handleClick = (e) => {
 		const value = e.target.getAttribute('data-value');
@@ -45,6 +43,7 @@ class App extends Component {
 				break;
 		}
 	}
+
 	calculate = () => {
 		const input = this.state.queue.join('');
 		if (input.length) {
@@ -55,6 +54,7 @@ class App extends Component {
 			});
 		}
 	}
+
 	render() {
 		return (
 			<div className='frame' style={styles.google}>
@@ -87,9 +87,5 @@ class App extends Component {
 		);
 	}
 }
-
-App.propTypes = {
-	testProp: PropTypes.string.isRequired
-};
 
 export default ReactFontIt(App, fontConfig);
