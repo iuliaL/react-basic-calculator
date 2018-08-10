@@ -1,0 +1,89 @@
+@import partials/variables
+
+h1
+	color: $text-color
+	font-family: $sans
+	background: yellow
+	
+body
+	background: #eee
+	display: flex
+	align-items: center
+	justify-content: center
+	height: 100vh
+	font-weight: 300
+	
+.frame
+	background: #000
+	padding: 20px
+
+.calculator
+	background: #333
+	border-top-right-radius: 20px
+	border-top-left-radius: 20px
+
+.display
+	color: #fff
+	min-height: $square-unit + 10px
+	font-size: 35px
+	display: flex
+	justify-content: flex-end
+	align-items: flex-end
+
+.input
+	text-align: right
+	max-width: $square-unit * 4
+	word-break: break-all
+	padding: 15px 10px 10px
+	box-sizing: border-box
+
+.panel
+	display: flex
+.number-container
+	padding: 5px
+	padding-right: 0
+	width: $square-unit * 3
+	display: flex
+	flex-wrap: wrap
+
+.btn
+	display: flex
+	justify-content: center
+	align-items: center
+	font-size: 35px
+	height: $square-unit
+	box-sizing: border-box
+	&:hover
+		opacity: .9
+		cursor: pointer
+
+.btn-3x
+	width: $square-unit * 3
+	font-size: 25px
+
+.btn-2x
+	width: $square-unit * 2
+
+.white-btn
+	background: #fff
+	color: $text-color
+	box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.8)
+	&:hover
+		box-shadow: inset 0px 0px 1px 0px rgba(0, 0, 0, 0.8)
+
+
+.red-btn
+	background: linear-gradient(115deg, rgb(137, 21, 21) 0%, rgb(167, 37, 37) 100%)
+	color: #fff
+	box-shadow: 0 0px 3px 0px rgba(200,200,200,0.8)
+	&:hover
+		box-shadow: inset 0px 0px 1px 0px rgba(200,200,200,0.8)
+
+
+.btn-1x	
+	width: $square-unit
+
+.operation-container
+	@extend .number-container
+	padding-left: 0
+	width: $square-unit
