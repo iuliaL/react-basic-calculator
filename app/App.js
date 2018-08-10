@@ -28,18 +28,11 @@ class App extends Component {
 	componentWillReceiveProps(nextProps) {
 		const { keydown: { event } } = nextProps;
 		if (event) {
-			const acceptedKeys = ['.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/', '=', 'Enter', 'Backspace'];
-			const pressedKey = event.key;
-			const keyAccepted = acceptedKeys.indexOf(pressedKey) > -1;
-			if (keyAccepted) {
-				const key = (pressedKey === 'Enter' && '=') || (pressedKey === 'Backspace' && 'clear') || pressedKey;
-				this.setState({ ...this.state, pressedKey: key });
-				this.handleValue(key);
-			}
+			this.handleKeyPress(event.key);
 		}
 	}
 
-	handleValue = (value) => {
+	handleValue = value => {
 		switch (value) {
 			case 'clear':
 				this.setState({
@@ -57,7 +50,22 @@ class App extends Component {
 		}
 	}
 
-	handleClick = (e) => {
+	handleKeyPress = key => {
+		const acceptedKeys = [
+			'.',
+			'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+			'+', '-', '*', '/', '=',
+			'Enter', 'Backspace'
+		];
+		const keyAccepted = acceptedKeys.indexOf(key) > -1;
+		if (keyAccepted) {
+			const keyValue = (key === 'Enter' && '=') || (key === 'Backspace' && 'clear') || key;
+			this.setState({ ...this.state, pressedKey: keyValue });
+			this.handleValue(keyValue);
+		}
+	}
+
+	handleClick = e => {
 		const value = e.target.getAttribute('data-value');
 		this.handleValue(value);
 	}
@@ -66,7 +74,7 @@ class App extends Component {
 		const input = this.state.queue.join('');
 		if (input.length) {
 			const result = math.eval(input);
-			const formattedResult = math.format(result, { precision: 14 });
+			const formattedResult = math.format(result, { precision: 10 });
 			this.setState({
 				...this.state,
 				queue: [formattedResult]
