@@ -7,6 +7,6 @@ Supports both mouse and keyboard events.
 
 
 <kbd>
-  <img src="/Screen-Shot.png?raw=true">
+  <img src="/ScreenShot.png?raw=true">
 </kbd>
 
