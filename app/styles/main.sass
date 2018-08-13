@@ -15,6 +15,14 @@ body
 	height: 100vh
 	font-weight: 300
 	font-family: 'Work Sans', sans-serif
+
+.error
+	background: red
+	color: #ffffff
+	padding: 5px
+	text-align: center
+	display: block
+	max-width: 320px
 	
 .frame
 	background: #000
@@ -44,11 +52,15 @@ body
 	display: flex
 
 .number-container
-	padding: 5px
-	padding-right: 0
+	padding: 5px 0 5px 5px
 	width: $square-unit * 3
 	display: flex
 	flex-wrap: wrap
+
+.operation-container
+	@extend .number-container
+	padding: 5px 5px 5px 0
+	width: $square-unit
 
 .btn
 	display: flex
@@ -94,7 +106,3 @@ body
 	opacity: .6
 	box-shadow: inset 0px 0px 1px 0px rgba(200,200,200,0.8) !important
 
-.operation-container
-	@extend .number-container
-	padding-left: 0
-	width: $square-unit
