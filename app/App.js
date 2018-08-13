@@ -91,7 +91,7 @@ export default class Calculator extends Component {
 				{error && <div className='error'>{error}</div>}
 				<div className='frame'>
 					<div className='calculator'>
-						<Display input={queue.join('')} />
+						<Display input={queue} />
 						<div className='panel'>
 							<div className='number-container'>
 								<Button
