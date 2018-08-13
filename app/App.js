@@ -26,17 +26,15 @@ export default class Calculator extends Component {
 			case 'clear':
 				this.setState({
 					queue: [],
-					pressedKey: null
+					pressedKey: null,
+					error: null
 				});
 				break;
 			case '=':
 				this.calculate();
 				break;
 			default:
-				this.setState(prevState => ({
-					...prevState,
-					queue: [...prevState.queue, value]
-				}));
+				this.setState(prevState => ({ queue: [...prevState.queue, value] }));
 				break;
 		}
 	}
